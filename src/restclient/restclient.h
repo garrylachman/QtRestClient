@@ -10,6 +10,7 @@
 #include <QtCore/qversionnumber.h>
 
 #include <QtNetwork/qnetworkrequest.h>
+#include <QHttpMultiPart>
 
 #ifndef Q_RESTCLIENT_NO_JSON_SERIALIZER
 class QJsonSerializer;

@@ -278,7 +278,35 @@ QNetworkReply *RestReplyPrivate::compatSend(QNetworkAccessManager *nam, const QN
 		if(reply)
 			reply->setProperty(PropertyBuffer, body);
 	}
-	return reply;
+    return reply;
+}
+
+QNetworkReply *RestReplyPrivate::compatSend(QNetworkAccessManager *nam, const QNetworkRequest &request, const QByteArray &verb, QHttpMultiPart *httpMultiPart)
+{
+    QNetworkReply *reply = nullptr;
+#ifdef Q_OS_WASM  // WORKAROUND until QTBUG-76775 was fixed
+    if (verb == RestClass::GetVerb)
+        reply = nam->get(request);
+    else if (verb == RestClass::PostVerb) {
+        reply = nam->post(request, httpMultiPart);
+        if(reply)
+            reply->setProperty(PropertyBuffer, httpMultiPartody);
+    } else if (verb == RestClass::PutVerb) {
+        reply = nam->put(request, httpMultiPart);
+        if(reply)
+            reply->setProperty(PropertyBuffer, httpMultiPart);
+    } else if (verb == RestClass::DeleteVerb)
+        reply = nam->deleteResource(request);
+    else if (verb == RestClass::PatchVerb)
+        reply = nam->head(request);
+    else
+#endif
+    if(httpMultiPart == nullptr)
+        reply = nam->sendCustomRequest(request, verb);
+    else {
+        reply = nam->sendCustomRequest(request, verb, httpMultiPart);
+    }
+    return reply;
 }
 
 RestReplyPrivate::RestReplyPrivate(QNetworkReply *networkReply, RestReply *q_ptr) :

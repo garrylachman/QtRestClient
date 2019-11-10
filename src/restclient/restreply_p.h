@@ -15,6 +15,7 @@ public:
 	static const QByteArray PropertyBuffer;
 
 	static QNetworkReply *compatSend(QNetworkAccessManager *nam, const QNetworkRequest &request, const QByteArray &verb, const QByteArray &body);
+    static QNetworkReply *compatSend(QNetworkAccessManager *nam, const QNetworkRequest &request, const QByteArray &verb, QHttpMultiPart *httpMultiPart);
 
 	QPointer<QNetworkReply> networkReply;
 	bool autoDelete = true;

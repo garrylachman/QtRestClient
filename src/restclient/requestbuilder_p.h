@@ -30,6 +30,7 @@ struct Q_RESTCLIENT_EXPORT RequestBuilderPrivate : public QSharedData
 	QByteArray body;
 	QByteArray verb;
 	QUrlQuery postQuery;
+    QHttpMultiPart *httpMultiPart = nullptr;
 
 	RequestBuilderPrivate(const QUrl &baseUrl, QNetworkAccessManager *nam);
 	RequestBuilderPrivate(const RequestBuilderPrivate &other) = default;

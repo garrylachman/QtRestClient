@@ -11,6 +11,7 @@
 #include <QtCore/qurlquery.h>
 #include <QtCore/qversionnumber.h>
 #include <QtCore/qshareddata.h>
+#include <QHttpMultiPart>
 
 namespace QtRestClient {
 
@@ -75,6 +76,8 @@ public:
 	RequestBuilder &setBody(const QJsonArray &body);
 	//! Sets the HTTP-Verb to be used by the generated network request
 	RequestBuilder &setVerb(QByteArray verb);
+    //! Set QHttpMultiPart
+    RequestBuilder &setHttpMultiPart(QHttpMultiPart *httpMultiPart);
 
 	//! Adds a post parameter to the body
 	RequestBuilder &addPostParameter(const QString &name, const QString &value);

@@ -8,7 +8,7 @@
 using namespace QtRestClient;
 
 RequestBuilder::RequestBuilder(const QUrl &baseUrl, QNetworkAccessManager *nam) :
-	d{new RequestBuilderPrivate{baseUrl, nam}}
+    d{new RequestBuilderPrivate{baseUrl, nam}}
 {}
 
 RequestBuilder::RequestBuilder(const RequestBuilder &other) = default;
@@ -164,7 +164,12 @@ RequestBuilder &RequestBuilder::setBody(const QJsonArray &body)
 RequestBuilder &RequestBuilder::setVerb(QByteArray verb)
 {
 	d->verb = std::move(verb);
-	return *this;
+    return *this;
+}
+
+RequestBuilder &RequestBuilder::setHttpMultiPart(QHttpMultiPart *httpMultiPart)
+{
+    d->httpMultiPart = httpMultiPart;
 }
 
 RequestBuilder &RequestBuilder::addPostParameter(const QString &name, const QString &value)
